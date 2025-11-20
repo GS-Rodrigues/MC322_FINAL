@@ -52,7 +52,7 @@ public class StorageAddress {
      * Atualiza a quantidade armazenada neste endereço.
      *
      * @param quantity nova quantidade a ser registrada
-     */
+     */ 
     public void setQuantity(int quantity) {
         this.quantity = quantity;
     }
