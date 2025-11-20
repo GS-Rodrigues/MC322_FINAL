@@ -1,0 +1,43 @@
+package wms.domain.interfaces;
+
+/**
+ * Define o contrato para operações de movimentação de estoque no sistema WMS.
+ *
+ * <p>
+ * A interface {@code InvMoviment} especifica as ações obrigatórias relacionadas
+ * a entradas e saídas de produtos no estoque, além do registro dessas
+ * movimentações. Qualquer classe que gerencie ou mexa no estoque deve
+ * implementar
+ * esta interface.
+ * </p>
+ *
+ * <p>
+ * As funcionalidades incluem: reabastecimento, retirada de produtos, registro
+ * de transações e visualização do histórico de movimentações.
+ * </p>
+ *
+ * @author Guilherme Rodrigues
+ * @version 1.0
+ * @since 2025-11-20
+ */
+public interface InvMoviment {
+    /**
+     * Reabastece o estoque de um {@code Produto}
+     */
+    public Void restock(Product product, int quantity);
+
+    /**
+     * Retira {@code Produto} do estoque
+     */
+    public Void withdraw(Product product, int quantity);
+
+    /**
+     * Registra uma transação da classe Transaction em um arquivo XML.
+     */
+    public Void registerTransaction(Transaction transaction);
+
+    /**
+     * Exibe o histórico de transações.
+     */
+    public void viewTransactions();
+}
