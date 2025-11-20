@@ -13,7 +13,7 @@ import java.util.List;
  * de adição e remoção de unidades.
  * </p>
  *
- * @author Guilherme
+ * @author Guilherme Rodrigues
  * @version 1.0
  * @since 2025-11-20
  */
