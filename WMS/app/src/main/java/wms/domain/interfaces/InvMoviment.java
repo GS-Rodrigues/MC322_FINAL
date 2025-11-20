@@ -1,5 +1,8 @@
 package wms.domain.interfaces;
 
+import wms.domain.entity.Product;
+import wms.domain.entity.Transaction;
+
 /**
  * Define o contrato para operações de movimentação de estoque no sistema WMS.
  *
@@ -7,8 +10,7 @@ package wms.domain.interfaces;
  * A interface {@code InvMoviment} especifica as ações obrigatórias relacionadas
  * a entradas e saídas de produtos no estoque, além do registro dessas
  * movimentações. Qualquer classe que gerencie ou mexa no estoque deve
- * implementar
- * esta interface.
+ * implementar esta interface.
  * </p>
  *
  * <p>
