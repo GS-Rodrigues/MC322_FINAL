@@ -1,5 +1,6 @@
 package wms.domain.order;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import wms.support.OrderNumberGenerator;
@@ -29,10 +30,10 @@ public abstract class Order {
      * @param status status inicial do pedido
      */
 
-    public Order(String status, List<OrderItem> itens) {
+    public Order(String status) {
         this.code = OrderNumberGenerator.nextId(); // código único gerado
-        this.itens = itens;
         this.status = status;
+        this.itens = new ArrayList<>();
     }
 
     /**
@@ -73,4 +74,9 @@ public abstract class Order {
     public List<OrderItem> getItens() {
         return this.itens;
     }
+
+    public void addItem(OrderItem item) {
+        itens.add(item);
+    }
+
 }

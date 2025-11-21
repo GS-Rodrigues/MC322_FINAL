@@ -1,4 +1,4 @@
-package wms.domain.interfaces;
+package wms.interfaces;
 
 import wms.domain.entity.Product;
 import wms.domain.entity.Transaction;

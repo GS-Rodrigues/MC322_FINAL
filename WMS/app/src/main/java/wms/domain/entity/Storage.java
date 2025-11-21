@@ -3,11 +3,10 @@ package wms.domain.entity;
 import java.util.ArrayList;
 import java.util.List;
 
-import wms.domain.interfaces.InvMoviment;
 import wms.domain.order.OrderItem;
 import wms.domain.order.PurchaseOrder;
 import wms.domain.order.SellingOrder;
-
+import wms.interfaces.InvMoviment;
 
 /**
  * Representa o controle central de estoque do sistema WMS.
@@ -86,8 +85,8 @@ public class Storage implements InvMoviment {
             PurchaseOrder po = new PurchaseOrder(
                     p.getSupplier(),
                     p.getSupplierPhone(),
-                    "PENDING",
-                    List.of(new OrderItem(p, quantityToBuy)));
+                    "PENDING");
+            po.addItem(new OrderItem(p, quantityToBuy));
             // registra como “pendente”, para o operador aprovar futuramente
             po.setStatus("PENDING");
             System.out.println("[AUTO] Gerado pedido de compra para "

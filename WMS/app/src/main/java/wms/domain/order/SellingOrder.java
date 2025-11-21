@@ -1,7 +1,5 @@
 package wms.domain.order;
 
-import java.util.List;
-
 /**
  * Representa um pedido de venda, contendo dados básicos do cliente.
  *
@@ -20,8 +18,8 @@ public class SellingOrder extends Order {
      * @param customerName nome do cliente
      * @param cep          CEP do cliente
      */
-    public SellingOrder(String customerName, String cep, String status, List<OrderItem> itens) {
-        super(status, itens);
+    public SellingOrder(String customerName, String cep, String status) {
+        super(status);
         this.customerName = customerName;
         this.cep = cep;
     }

@@ -1,7 +1,5 @@
 package wms.domain.order;
 
-import java.util.List;
-
 /**
  * Representa um pedido de compra, contendo informações do fornecedor.
  *
@@ -20,8 +18,8 @@ public class PurchaseOrder extends Order {
      * @param supplier      nome do fornecedor
      * @param supplierPhone telefone do fornecedor
      */
-    public PurchaseOrder(String supplier, String supplierPhone, String status, List<OrderItem> itens) {
-        super(status, itens); 
+    public PurchaseOrder(String supplier, String supplierPhone, String status) {
+        super(status);
         this.supplier = supplier;
         this.supplierPhone = supplierPhone;
     }
