@@ -22,7 +22,7 @@ public class OrderItem {
     public OrderItem(Product product, int quantity) {
         this.quantity = quantity;
         this.product = product;
-    }
+    } 
 
     /**
      * Retorna a quantidade deste item.

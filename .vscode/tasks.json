@@ -1,0 +1,24 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "git-auto-msg",
+            "type": "shell",
+            "command": "git pull && git add . && git commit -m \"${input:msg}\" && git push",
+            "options": {
+                "shell": {
+                    "executable": "cmd.exe",
+                    "args": ["/c"]
+                }
+            },
+            "group": "build"
+        }
+    ],
+    "inputs": [
+        {
+            "id": "msg",
+            "type": "promptString",
+            "description": "Mensagem do commit"
+        }
+    ]
+}
