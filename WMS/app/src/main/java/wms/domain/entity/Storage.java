@@ -8,6 +8,34 @@ import wms.domain.order.OrderItem;
 import wms.domain.order.PurchaseOrder;
 import wms.domain.order.SellingOrder;
 
+
+/**
+ * Representa o controle central de estoque do sistema WMS.
+ *
+ * <p>
+ * A classe {@code Storage} concentra todas as operações de entrada e saída de
+ * produtos, bem como o registro das transações realizadas. Ela mantém uma lista
+ * de produtos armazenados e um histórico das movimentações ocorridas.
+ * </p>
+ *
+ * <p>
+ * Além disso, {@code Storage} implementa a interface {@link InvMoviment},
+ * fornecendo os métodos padronizados de reabastecimento ({@code restock}),
+ * retirada ({@code withdraw}), registro de transações e visualização do
+ * histórico. Métodos de mais alto nível, como {@code purchase} e {@code sell},
+ * utilizam as operações básicas da interface para manipular o estoque.
+ * </p>
+ *
+ * <p>
+ * A classe também é responsável por avaliar quando um item está abaixo da
+ * quantidade mínima definida, podendo futuramente gerar pedidos automáticos de
+ * reposição.
+ * </p>
+ *
+ * @author Guilherme
+ * @version 1.0
+ * @since 2025-11-21
+ */
 public class Storage implements InvMoviment {
 
     private List<Product> products;
@@ -65,7 +93,7 @@ public class Storage implements InvMoviment {
             System.out.println("[AUTO] Gerado pedido de compra para "
                     + p.getName() + " de " + quantityToBuy + " unidades.");
         }
-        
+
     }
 
     /**
