@@ -4,6 +4,10 @@ import java.util.List;
 
 /**
  * Representa um pedido de compra, contendo informações do fornecedor.
+ *
+ * @author Guilherme Rodrigues
+ * @version 1.0
+ * @since 2025-11-21
  */
 public class PurchaseOrder extends Order {
 

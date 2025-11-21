@@ -10,6 +10,10 @@ import wms.support.OrderNumberGenerator;
  * Contém código identificador, lista de itens e status atual.
  * É usada como base para pedidos de compra, venda, etc.
  * </p>
+ *
+ * @author Guilherme Rodrigues
+ * @version 1.0
+ * @since 2025-11-21
  */
 public abstract class Order {
 
