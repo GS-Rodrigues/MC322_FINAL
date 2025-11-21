@@ -57,6 +57,7 @@ public class OrderManager {
             SellingOrder item = it.next();
 
             if (item.getCode().equals(socode)) {
+                item.setStatus("COMPLETED");
                 finishedso.add(item); // adiciona na lista de pedidos finalizados
                 it.remove(); // remove da lista de pedidos pendentes
             }
@@ -76,6 +77,7 @@ public class OrderManager {
             PurchaseOrder item = it.next();
 
             if (item.getCode().equals(pocode)) {
+                item.setStatus("COMPLETED");
                 finishedpo.add(item); // adiciona na lista de pedidos finalizados
                 it.remove(); // remove da lista de pedidos pendentes
             }

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import wms.domain.order.OrderItem;
+import wms.domain.order.OrderManager;
 import wms.domain.order.PurchaseOrder;
 import wms.domain.order.SellingOrder;
 import wms.interfaces.InvMoviment;
@@ -27,22 +28,24 @@ import wms.interfaces.InvMoviment;
  *
  * <p>
  * A classe também é responsável por avaliar quando um item está abaixo da
- * quantidade mínima definida, podendo futuramente gerar pedidos automáticos de
+ * quantidade mínima definida, podendo gerar pedidos automáticos de
  * reposição.
  * </p>
  *
  * @author Guilherme
- * @version 1.0
+ * @version 1.1
  * @since 2025-11-21
  */
 public class Storage implements InvMoviment {
 
     private List<Product> products;
     private List<Transaction> lasttransactions;
+    private OrderManager ordermanager;
 
     public Storage() {
         this.products = new ArrayList<>();
         this.lasttransactions = new ArrayList<>();
+        this.ordermanager = new OrderManager();
     }
 
     /**
@@ -82,15 +85,12 @@ public class Storage implements InvMoviment {
     private void checkAndGenerateAutoPurchase(Product p) {
         if (isBelowMinimum(p)) {
             int quantityToBuy = p.getMaxQuantity() - p.getCurrentQuantity();
-            PurchaseOrder po = new PurchaseOrder(
-                    p.getSupplier(),
-                    p.getSupplierPhone(),
-                    "PENDING");
+            PurchaseOrder po = new PurchaseOrder(p.getSupplier(), p.getSupplierPhone(), "PENDING");
             po.addItem(new OrderItem(p, quantityToBuy));
-            // registra como “pendente”, para o operador aprovar futuramente
             po.setStatus("PENDING");
-            System.out.println("[AUTO] Gerado pedido de compra para "
-                    + p.getName() + " de " + quantityToBuy + " unidades.");
+            System.out.println(
+                    "[AUTO] Gerado pedido de compra para " + p.getName() + " de " + quantityToBuy + " unidades.");
+            ordermanager.addPo(po);
         }
 
     }
@@ -104,8 +104,7 @@ public class Storage implements InvMoviment {
         for (OrderItem item : po.getItens()) {
             restock(item.getProduct(), item.getQuantity());
         }
-
-        po.setStatus("COMPLETED");
+        ordermanager.finishPo(po.getCode());
     }
 
     /**
@@ -117,8 +116,7 @@ public class Storage implements InvMoviment {
         for (OrderItem item : so.getItens()) {
             withdraw(item.getProduct(), item.getQuantity());
         }
-
-        so.setStatus("COMPLETED");
+        ordermanager.finishSo(so.getCode());
     }
 
     /**
