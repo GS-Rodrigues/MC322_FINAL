@@ -2,7 +2,6 @@ package wms.domain.entity;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import wms.domain.order.OrderItem;
 import wms.domain.order.OrderManager;
 import wms.domain.order.PurchaseOrder;
@@ -33,7 +32,7 @@ import wms.interfaces.InvMoviment;
  * </p>
  *
  * @author Guilherme
- * @version 1.1
+ * @version 1.2
  * @since 2025-11-21
  */
 public class Storage implements InvMoviment {
@@ -95,6 +94,10 @@ public class Storage implements InvMoviment {
 
     }
 
+    public void receiveSellingOrder(SellingOrder neworder){
+        this.ordermanager.addSo(neworder);
+    }
+    
     /**
      * Realiza operação de compra (entrada de estoque).
      *
