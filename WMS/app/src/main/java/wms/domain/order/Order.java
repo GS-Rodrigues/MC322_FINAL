@@ -2,6 +2,8 @@ package wms.domain.order;
 
 import java.util.List;
 
+import wms.support.OrderNumberGenerator;
+
 /**
  * Classe abstrata que representa um pedido genérico.
  * <p>
@@ -22,8 +24,9 @@ public abstract class Order {
      * @param itens  lista de itens do pedido
      * @param status status inicial do pedido
      */
-    public Order(String code, List<OrderItem> itens, String status) {
-        this.code = code;
+
+    public Order(String status, List<OrderItem> itens) {
+        this.code = OrderNumberGenerator.nextId(); // código único gerado
         this.itens = itens;
         this.status = status;
     }
