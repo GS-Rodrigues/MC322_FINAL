@@ -52,7 +52,7 @@ public abstract class Order {
      *
      * @param status novo status
      */
-    protected void setStatus(String status) {
+    public void setStatus(String status) {
         this.status = status;
     }
 
