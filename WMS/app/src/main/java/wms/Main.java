@@ -10,13 +10,12 @@ public class Main {
         Product p2 = new Product("7897832823236", "Régua 50cm Dello", "Dello", "(35) 3435-8900", 50, 10, 100);
         Product p3 = new Product("7897832823245", "Régua 70cm Dello", "Dello", "(35) 3435-8900", 50, 10, 100);
 
-        // 2. Criar estoque
         Storage storage = new Storage();
         storage.restock(p1, 100);
         storage.restock(p2, 50);
         storage.restock(p3, 60);
 
-        // 3. Criar pedidos de venda
+        // Pedidos de venda ficticios
         SellingOrder order1 = new SellingOrder("Cliente A", "12345-678", "PENDING");
         order1.addItem(new OrderItem(p1, 10));
         order1.addItem(new OrderItem(p2, 5));
