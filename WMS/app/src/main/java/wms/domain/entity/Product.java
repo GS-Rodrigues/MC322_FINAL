@@ -17,7 +17,7 @@ import java.util.List;
  * @version 1.0
  * @since 2025-11-20
  */
-public class Product {
+public class Product extends Entity {
     private String code;
     private String name;
     private String supplier;
@@ -41,6 +41,7 @@ public class Product {
     public Product(String code, String name, String supplier, String supplierphone,
             int currentquantity, int minquantity, int maxquantity) {
 
+        super();
         this.code = code;
         this.name = name;
         this.supplier = supplier;

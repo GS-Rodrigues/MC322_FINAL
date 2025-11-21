@@ -19,7 +19,7 @@ package wms.domain.entity;
  * @version 1.0
  * @since 2025-11-20
  */
-public class StorageAddress {
+public class StorageAddress extends Entity{
     private String shelf;
     private int quantity;
 
@@ -30,6 +30,7 @@ public class StorageAddress {
      * @param quantity quantidade armazenada neste endereço
      */
     public StorageAddress(String shelf, int quantity) {
+        super();
         this.shelf = shelf;
         this.quantity = quantity;
     }

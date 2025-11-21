@@ -1,5 +1,6 @@
 package wms.domain.order;
 
+import wms.domain.entity.Entity;
 import wms.domain.entity.Product;
 
 /**
@@ -9,7 +10,7 @@ import wms.domain.entity.Product;
  * @version 1.0
  * @since 2025-11-21
  */
-public class OrderItem {
+public class OrderItem  extends Entity{
     private Product product;
     private int quantity;
 
@@ -20,6 +21,7 @@ public class OrderItem {
      * @param quantity a quantidade do produto
      */
     public OrderItem(Product product, int quantity) {
+        super();
         this.quantity = quantity;
         this.product = product;
     } 
