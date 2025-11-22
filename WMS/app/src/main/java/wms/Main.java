@@ -270,6 +270,19 @@ public class Main {
     private static void updateProduct(Scanner sc, Storage storage) {
         System.out.print("Código de Barra do Produto: ");
         String code = sc.nextLine();
+
+        Product found = null;
+        for (Product p : storage.getProducts()) {
+            if (p.getCode().equals(code)) {
+                found = p;
+                break;
+            }
+        }
+
+        if (found == null) {
+            System.out.println("ERRO: Produto não encontrado.");
+            return;
+        }
         System.out.println("\n--- Campos ---");
         System.out.println("1. Atualizar Nome");
         System.out.println("2. Atualizar quantidade Mínima");
@@ -281,14 +294,11 @@ public class Main {
         sc.nextLine(); // consumir quebra de linha
 
         switch (op) {
-
-            // === PRODUTOS ===
-            case 1 -> storage.;
-            case 2 -> productsList(storage);
-            case 3 -> searchProduct(sc, storage);
-            case 4 -> updateProduct(sc, storage);
-            case 5 -> updateProduct(sc, storage);
-
+            case 1 -> found.setName(sc.nextLine());
+            case 2 -> found.setMinQuantity(sc.nextInt());
+            case 3 -> found.setMaxQuantity(sc.nextInt());
+            case 4 -> found.setSupplier(sc.nextLine());
+            case 5 -> found.setSupplierPhone(sc.nextLine());
             default -> System.out.println("Opção inválida.");
         }
     }
