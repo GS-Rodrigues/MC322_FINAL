@@ -2,6 +2,8 @@ package wms.domain.entity;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
+
 import wms.domain.order.OrderItem;
 import wms.domain.order.OrderManager;
 import wms.domain.order.PurchaseOrder;
@@ -32,7 +34,7 @@ import wms.interfaces.InvMoviment;
  * </p>
  *
  * @author Guilherme
- * @version 1.3
+ * @version 1.4
  * @since 2025-11-21
  */
 public class Storage implements InvMoviment {
@@ -163,7 +165,18 @@ public class Storage implements InvMoviment {
         return products;
     }
 
-    public List<Transaction> getLastTransactions() {
-        return lasttransactions;
+    public OrderManager getOrderManager() {
+        return this.ordermanager;
     }
+
+    public Product getProductByCode(String code) {
+        for (Product item : this.getProducts()) {
+            if (item.getCode().equals(code)) {
+                return item;
+            }
+        }
+        System.out.print("ERRO: Produto não encontrado!");
+        return null;
+    }
+
 }

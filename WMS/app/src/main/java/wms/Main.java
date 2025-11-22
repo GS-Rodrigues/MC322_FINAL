@@ -125,32 +125,32 @@ public class Main {
 
             switch (op) {
 
-                // === PRODUTOS ===
+                // PRODUTOS
                 case 1 -> inputNewProduct(sc, storage);
                 case 2 -> productsList(storage);
                 case 3 -> searchProduct(sc, storage);
                 case 4 -> updateProduct(sc, storage);
 
-                // === ESTOQUE ===
+                // ESTOQUE
                 case 5 -> input(sc, storage);
                 case 6 -> output(sc, storage);
                 case 7 -> StorageList(storage);
                 case 8 -> productConsult(sc, storage);
 
-                // === PEDIDO DE COMPRA ===
-                case 9 -> processarPedidoCompra(sc, storage);
-                case 10 -> listarPedidosCompra(storage);
+                // PEDIDO DE COMPRA
+                case 9 -> processPurchaseOrder(sc, storage);
+                case 10 -> lisOfPO(storage);
 
-                // === PEDIDO DE VENDA ===
-                case 11 -> criarPedidoVendaCompleto(sc, storage);
+                // PEDIDO DE VENDA
+                case 11 -> newSellingOrder(sc, storage);
                 case 12 -> processarPedidoVenda(sc, storage);
                 case 13 -> listarPedidosVenda(storage);
 
-                // === UTILIDADES ===
+                // UTILIDADES
                 case 14 -> mostrarLog(storage);
                 case 15 -> gerarRelatorioEstoque(storage);
 
-                // === SAIR ===
+                // SAIR
                 case 16 -> running = false;
 
                 default -> System.out.println("Opção inválida.");
@@ -520,7 +520,7 @@ public class Main {
                         "--------------------------------------------------------------------------------------------");
                 String nome = Truncar.truncar(p.getName(), 35);
                 String fornecedor = Truncar.truncar(p.getSupplier(), 20);
-                System.out.printf("%-13s %-35s %-6d %-6d %-6d %-20s%n",
+                System.out.printf("%-15s %-30s %-10d %-10d %-10d %-10s%n",
                         p.getCode(),
                         nome,
                         p.getCurrentQuantity(),
@@ -534,13 +534,104 @@ public class Main {
         return;
     }
 
-    private static void processarPedidoCompra(Scanner sc, Storage storage) {
+    private static void processPurchaseOrder(Scanner sc, Storage storage) {
+        System.out.println("=== Processar PO===\n");
+        System.out.print("Código do PO:");
+        String code = sc.nextLine();
+
+        for (PurchaseOrder item : storage.getOrderManager().getPo()) {
+            if (item.getCode().equals(code)) {
+                storage.purchase(item);
+                return;
+            }
+        }
+        System.out.print("ERRO: Pedido não encontrado! Operação Cancelada.");
+        return;
     }
 
-    private static void listarPedidosCompra(Storage storage) {
+    private static void lisOfPO(Storage storage) {
+        List<PurchaseOrder> pedidos = storage.getOrderManager().getPo();
+
+        if (pedidos.isEmpty()) {
+            System.out.println("\nNenhum pedido de compra cadastrado.");
+            return;
+        }
+
+        System.out.println("\n=== LISTA DE PEDIDOS DE COMPRA ===");
+        System.out.printf("%-10s %-20s %-15s %-10s\n",
+                "CÓDIGO", "FORNECEDOR", "TELEFONE", "STATUS");
+        System.out.println("--------------------------------------------------------------");
+
+        for (PurchaseOrder po : pedidos) {
+            System.out.printf("%-10s %-20s %-15s %-10s\n",
+                    po.getCode(),
+                    Truncar.truncar(po.getSupplier(), 20),
+                    po.getSupplierPhone(),
+                    po.getStatus());
+
+            // Exibe itens do pedido (se houver)
+            if (!po.getItens().isEmpty()) {
+                System.out.println("  Itens:");
+                for (OrderItem item : po.getItens()) {
+                    System.out.println("    - " + item.getProduct().getName() +
+                            " | Qtd: " + item.getQuantity());
+                }
+            }
+
+            System.out.println("--------------------------------------------------------------");
+        }
     }
 
-    private static void criarPedidoVendaCompleto(Scanner sc, Storage storage) {
+    private static void newSellingOrder(Scanner sc, Storage storage) {
+        System.out.println("=== Criar Pedido de Venda ===");
+
+        // Dados do cliente
+        System.out.print("Nome do cliente: ");
+        String nomeCliente = sc.nextLine();
+
+        System.out.print("CEP do cliente: ");
+        String cepCliente = sc.nextLine();
+
+        SellingOrder pedido = new SellingOrder(nomeCliente, cepCliente, "PENDING");
+        while (true) {
+            System.out.print("Código do produto (ou 'sair' para finalizar o pedido): ");
+            String codigo = sc.nextLine();
+            if (codigo.equalsIgnoreCase("sair")) {
+                break;
+            }
+
+            Product produto = storage.getProductByCode(codigo);
+            if (produto == null) {
+                System.out.println("Produto não encontrado!");
+                continue;
+            }
+
+            System.out.print("Quantidade: ");
+            int quantidade;
+            try {
+                quantidade = Integer.parseInt(sc.nextLine());
+            } catch (NumberFormatException e) {
+                System.out.println("Quantidade inválida!");
+                continue;
+            }
+
+            if (quantidade > produto.getCurrentQuantity()) {
+                System.out.println("Estoque insuficiente! Disponível: " + produto.getCurrentQuantity());
+                continue;
+            }
+
+            // Adiciona o item ao pedido
+            pedido.addItem(new OrderItem(produto, quantidade));
+
+            System.out.println("Item adicionado ao pedido!");
+        }
+
+        if (pedido.getItens().isEmpty()) {
+            System.out.println("Pedido vazio. Nenhum item adicionado.");
+        } else {
+            storage.receiveSellingOrder(pedido);
+            System.out.println("Pedido de venda criado com sucesso!");
+        }
     }
 
     private static void processarPedidoVenda(Scanner sc, Storage storage) {
