@@ -162,11 +162,27 @@ public class Main {
         sc.close();
     }
 
+    /**
+     * Aguarda o usuário pressionar ENTER antes de continuar a execução.
+     *
+     * @param sc Scanner para capturar a entrada do usuário.
+     * 
+     * @author Guilherme Rodrigues
+     * @version 1.0
+     * @since 2025-11-22
+     */
     private static void pause(Scanner sc) {
         System.out.println("\nPressione ENTER para continuar...");
         sc.nextLine();
     }
 
+    /**
+     * Exibe o menu principal do sistema WMS com todas as opções disponíveis.
+     * 
+     * @author Guilherme Rodrigues
+     * @version 1.0
+     * @since 2025-11-22
+     */
     private static void printMenu() {
         System.out.println("\n====== MENU WMS ======");
 
@@ -198,10 +214,32 @@ public class Main {
         System.out.println("\n16. Sair");
     }
 
+    /**
+     * Gera uma quantidade aleatória para uso como estoque inicial (dados
+     * simulados).
+     *
+     * @return Um valor entre 10 e 299 representando uma quantidade aleatória.
+     * 
+     * @author Guilherme Rodrigues
+     * @version 1.0
+     * @since 2025-11-22
+     */
     private static int getRandomStock() {
         return (int) (Math.random() * 290) + 10;
     }
 
+    /**
+     * Realiza o cadastro de um novo produto no sistema. Valida código duplicado,
+     * coleta dados do usuário e adiciona o produto ao estoque já com quantidade
+     * inicial.
+     *
+     * @param sc      Scanner para entrada do usuário.
+     * @param storage Instância do Storage onde o produto será armazenado.
+     * 
+     * @author Guilherme Rodrigues
+     * @version 1.0
+     * @since 2025-11-22
+     */
     private static void inputNewProduct(Scanner sc, Storage storage) {
         System.out.println("=== Cadastro de Produto ===");
 
@@ -249,12 +287,31 @@ public class Main {
         storage.restock(p, initial);
     }
 
+    /**
+     * Lista todos os produtos cadastrados exibindo código e nome.
+     *
+     * @param storage Instância do Storage que contém os produtos.
+     * 
+     * @author Guilherme Rodrigues
+     * @version 1.0
+     * @since 2025-11-22
+     */
     private static void productsList(Storage storage) {
         for (Product item : storage.getProducts()) {
             System.out.println(item.getCode() + " | " + item.getName() + "\n");
         }
     }
 
+    /**
+     * Busca um produto pelo código de barras e exibe seus dados detalhados.
+     *
+     * @param sc      Scanner para entrada do usuário.
+     * @param storage Instância do Storage contendo os produtos.
+     * 
+     * @author Guilherme Rodrigues
+     * @version 1.0
+     * @since 2025-11-22
+     */
     private static void searchProduct(Scanner sc, Storage storage) {
         DateTimeFormatter fmt = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
 
@@ -274,6 +331,17 @@ public class Main {
         return;
     }
 
+    /**
+     * Atualiza campos específicos de um produto existente. Localiza pelo código e
+     * permite alterar nome, min, max, fornecedor e telefone.
+     *
+     * @param sc      Scanner para entrada do usuário.
+     * @param storage Instância do Storage que contém os produtos.
+     * 
+     * @author Guilherme Rodrigues
+     * @version 1.0
+     * @since 2025-11-22
+     */
     private static void updateProduct(Scanner sc, Storage storage) {
         System.out.print("Código de Barra do Produto: ");
         String code = sc.nextLine();
@@ -310,6 +378,17 @@ public class Main {
         }
     }
 
+    /**
+     * Realiza uma entrada de produtos no estoque. Valida existência do produto e
+     * quantidade positiva.
+     *
+     * @param sc      Scanner para entrada do usuário.
+     * @param storage Instância do Storage responsável pelos produtos.
+     * 
+     * @author Guilherme Rodrigues
+     * @version 1.0
+     * @since 2025-11-22
+     */
     private static void input(Scanner sc, Storage storage) {
         Product p = null;
         System.out.println("=== Entrada de Produto ===");
@@ -335,6 +414,17 @@ public class Main {
         }
     }
 
+    /**
+     * Realiza a saída de produtos do estoque.Valida existência do produto,
+     * quantidade positiva e estoque suficiente.
+     *
+     * @param sc      Scanner para entrada do usuário.
+     * @param storage Instância do Storage responsável pelos produtos.
+     * 
+     * @author Guilherme Rodrigues
+     * @version 1.0
+     * @since 2025-11-22
+     */
     private static void output(Scanner sc, Storage storage) {
         Product p = null;
         System.out.println("=== Saida de Produto ===");
@@ -364,6 +454,16 @@ public class Main {
         }
     }
 
+    /**
+     * Exibe uma listagem completa dos produtos em formato de tabela, incluindo
+     * código, nome truncado, quantidades, limites e fornecedor.
+     *
+     * @param storage Instância do Storage que contém a lista de produtos.
+     * 
+     * @author Guilherme Rodrigues
+     * @version 1.0
+     * @since 2025-11-22
+     */
     private static void StorageList(Storage storage) {
         List<Product> produtos = storage.getProducts();
 
@@ -396,6 +496,17 @@ public class Main {
         }
     }
 
+    /**
+     * Exibe as informações de estoque de um produto em formato de tabela, incluindo
+     * código, nome truncado, quantidades, limites e fornecedor.
+     * 
+     * @param sc      Scanner para entrada do usuário.
+     * @param storage Instância do Storage que contém a lista de produtos.
+     * 
+     * @author Guilherme Rodrigues
+     * @version 1.0
+     * @since 2025-11-22
+     */
     private static void productConsult(Scanner sc, Storage storage) {
         System.out.println("=== Consultar Produto ===\n");
         System.out.print("Código de Barra do Produto: ");
