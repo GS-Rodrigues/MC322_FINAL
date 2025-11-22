@@ -118,8 +118,8 @@ public class Main {
                 // === PRODUTOS ===
                 case 1 -> inputNewProduct(sc, storage);
                 case 2 -> productsList(storage);
-                case 3 -> buscarProduto(sc, storage);
-                case 4 -> atualizarProduto(sc, storage);
+                case 3 -> searchProduct(sc, storage);
+                case 4 -> updateProduct(sc, storage);
 
                 // === ESTOQUE ===
                 case 5 -> reporEstoque(sc, storage);
@@ -152,10 +152,11 @@ public class Main {
 
         sc.close();
     }
+
     private static void pause(Scanner sc) {
-    System.out.println("\nPressione ENTER para continuar...");
-    sc.nextLine();
-}
+        System.out.println("\nPressione ENTER para continuar...");
+        sc.nextLine();
+    }
 
     private static void printMenu() {
         System.out.println("\n====== MENU WMS ======");
@@ -247,7 +248,7 @@ public class Main {
         }
     }
 
-    private static void buscarProduto(Scanner sc, Storage storage) {
+    private static void searchProduct(Scanner sc, Storage storage) {
         DateTimeFormatter fmt = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
 
         System.out.println("=== Buscar Produto ===\n");
@@ -256,10 +257,9 @@ public class Main {
 
         for (Product item : storage.getProducts()) {
             if (item.getCode().equals(code)) {
-                System.out.println(
-                        item.getCode() + " | " + item.getName() + " | Criação: " + item.getCreation().format(fmt)
-                                + " | Última Atualização: " + item.getLastUpdate().format(fmt) + "\n");
-
+                System.out.println("Codigo:" + item.getCode() + "\nNome:" + item.getName() + "\nCriação:"
+                        + item.getCreation().format(fmt) + "\nÚltima Atualização:" + item.getLastUpdate().format(fmt)
+                        + "\n");
                 return;
             }
         }
@@ -267,7 +267,30 @@ public class Main {
         return;
     }
 
-    private static void atualizarProduto(Scanner sc, Storage storage) {
+    private static void updateProduct(Scanner sc, Storage storage) {
+        System.out.print("Código de Barra do Produto: ");
+        String code = sc.nextLine();
+        System.out.println("\n--- Campos ---");
+        System.out.println("1. Atualizar Nome");
+        System.out.println("2. Atualizar quantidade Mínima");
+        System.out.println("3. Atualizar Quantidade Máxima");
+        System.out.println("4. Atualizar fornecedor");
+        System.out.println("5. Atualizar numero do fornecedor");
+        System.out.print("Escolha uma opção: ");
+        int op = sc.nextInt();
+        sc.nextLine(); // consumir quebra de linha
+
+        switch (op) {
+
+            // === PRODUTOS ===
+            case 1 -> storage.;
+            case 2 -> productsList(storage);
+            case 3 -> searchProduct(sc, storage);
+            case 4 -> updateProduct(sc, storage);
+            case 5 -> updateProduct(sc, storage);
+
+            default -> System.out.println("Opção inválida.");
+        }
     }
 
     private static void reporEstoque(Scanner sc, Storage storage) {

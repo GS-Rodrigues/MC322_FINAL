@@ -14,7 +14,7 @@ import java.util.List;
  * </p>
  *
  * @author Guilherme Rodrigues
- * @version 1.1
+ * @version 1.2
  * @since 2025-11-20
  */
 public class Product extends Entity {
@@ -68,43 +68,78 @@ public class Product extends Entity {
     /**
      * @return o nome do fornecedor
      */
-    protected String getSupplier() {
+    public String getSupplier() {
         return this.supplier;
     }
 
     /**
      * @return o telefone do fornecedor
      */
-    protected String getSupplierPhone() {
+    public String getSupplierPhone() {
         return this.supplierphone;
     }
 
     /**
      * @return lista de endereços de armazenamento onde o produto está alocado
      */
-    protected List<StorageAddress> getAddress() {
+    public List<StorageAddress> getAddress() {
         return this.address;
     }
 
     /**
      * @return quantidade atual em estoque
      */
-    protected int getCurrentQuantity() {
+    public int getCurrentQuantity() {
         return this.currentquantity;
     }
 
     /**
      * @return quantidade mínima aceitável do produto no estoque
      */
-    protected int getMinQuantity() {
+    public int getMinQuantity() {
         return this.minquantity;
     }
 
     /**
      * @return quantidade máxima suportada pelo estoque
      */
-    protected int getMaxQuantity() {
+    public int getMaxQuantity() {
         return this.maxquantity;
+    }
+
+    /**
+     * Atualiza o telefone do fornecedor
+     */
+    public void setSupplierPhone(String phone) {
+        this.supplierphone = phone;
+    }
+
+    /**
+     * Atualiza a quantidade máxima suportada pelo estoque
+     */
+    public void setMaxQuantity(int max) {
+        this.maxquantity = max;
+    }
+
+    /**
+     * Atualiza a quantidade mínima aceitável do produto no estoque
+     */
+    public void setMinQuantity(int min) {
+        this.minquantity = min;
+    }
+
+    /**
+     * Atualiza o nome do produto
+     */
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    /**
+     * @return o nome do fornecedor
+     */
+    public void setSupplier(String name) {
+        this.supplier = name;
     }
 
     /**
