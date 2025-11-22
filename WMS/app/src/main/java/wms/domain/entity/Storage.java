@@ -2,7 +2,6 @@ package wms.domain.entity;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 
 import wms.domain.order.OrderItem;
 import wms.domain.order.OrderManager;

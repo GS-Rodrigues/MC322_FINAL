@@ -143,7 +143,7 @@ public class Main {
 
                 // PEDIDO DE VENDA
                 case 11 -> newSellingOrder(sc, storage);
-                case 12 -> processarPedidoVenda(sc, storage);
+                case 12 -> processSellingOrder(sc, storage);
                 case 13 -> listarPedidosVenda(storage);
 
                 // UTILIDADES
@@ -634,7 +634,19 @@ public class Main {
         }
     }
 
-    private static void processarPedidoVenda(Scanner sc, Storage storage) {
+    private static void processSellingOrder(Scanner sc, Storage storage) {
+        System.out.println("=== Processar Ordem de Venda===\n");
+        System.out.print("Código da Ordem de Venda:");
+        String code = sc.nextLine();
+
+        for (SellingOrder item : storage.getOrderManager().getSo()) {
+            if (item.getCode().equals(code)) {
+                storage.sell(item);
+                return;
+            }
+        }
+        System.out.print("ERRO: Pedido não encontrado! Operação Cancelada.");
+        return;
     }
 
     private static void listarPedidosVenda(Storage storage) {
