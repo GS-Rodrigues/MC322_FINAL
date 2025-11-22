@@ -14,7 +14,7 @@ import java.util.List;
  * </p>
  *
  * @author Guilherme Rodrigues
- * @version 1.0
+ * @version 1.1
  * @since 2025-11-20
  */
 public class Product extends Entity {
@@ -39,14 +39,14 @@ public class Product extends Entity {
      * @param maxquantity     quantidade máxima que o estoque suporta
      */
     public Product(String code, String name, String supplier, String supplierphone,
-            int currentquantity, int minquantity, int maxquantity) {
+            int minquantity, int maxquantity) {
 
         super();
         this.code = code;
         this.name = name;
         this.supplier = supplier;
         this.supplierphone = supplierphone;
-        this.currentquantity = currentquantity;
+        this.currentquantity = 0;
         this.minquantity = minquantity;
         this.maxquantity = maxquantity;
     }
@@ -54,14 +54,14 @@ public class Product extends Entity {
     /**
      * @return o código identificador do produto
      */
-    protected String getCode() {
+    public String getCode() {
         return this.code;
     }
 
     /**
      * @return o nome do produto
      */
-    protected String getName() {
+    public String getName() {
         return this.name;
     }
 

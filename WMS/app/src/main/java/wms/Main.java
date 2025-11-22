@@ -1,32 +1,33 @@
 package wms;
 
+import java.util.Scanner;
+
 import wms.domain.entity.*;
 import wms.domain.order.*;
 
 public class Main {
     public static void main(String[] args) {
         // Produtos Exemplos
-        Product p1 = new Product("7897832823227", "Régua 30cm Dello", "Dello", "(35) 3435-8900", 50, 10, 100);
-        Product p2 = new Product("7897832823236", "Régua 50cm Dello", "Dello", "(35) 3435-8900", 50, 10, 100);
-        Product p3 = new Product("7897832823245", "Régua 70cm Dello", "Dello", "(35) 3435-8900", 50, 10, 100);
+        Product p1 = new Product("7897832823227", "Régua 30cm Dello", "Dello", "(35) 3435-8900", 50, 100);
+        Product p2 = new Product("7897832823236", "Régua 50cm Dello", "Dello", "(35) 3435-8900", 50,  100);
+        Product p3 = new Product("7897832823245", "Régua 70cm Dello", "Dello", "(35) 3435-8900", 50, 100);
         Product p4 = new Product("7891360320227", "Lápis 48 Cores Faber Castell Ecolápis", "Faber Castell",
-                "(11) 4004-6200", 30, 5, 200);
-        Product p5 = new Product("7891360674818", "Lápis 10 Cores Faber Castell", "Faber Castell", "(11) 4004-6200", 40,
-                8, 150);
+                "(11) 4004-6200", 30, 200);
+        Product p5 = new Product("7891360674818", "Lápis 10 Cores Faber Castell", "Faber Castell", "(11) 4004-6200", 40, 150);
         Product p6 = new Product("7891360458142", "Lápis 24 Cores Faber Castell Linha Vermelha", "Faber Castell",
-                "(11) 4004-6200", 20, 4, 100);
+                "(11) 4004-6200", 20, 100);
         Product p7 = new Product("7891360698449", "Lápis Eco Supersoft 50 Cores Faber Castell", "Faber Castell",
-                "(11) 4004-6200", 10, 2, 50);
+                "(11) 4004-6200", 10, 50);
         Product p8 = new Product("4006381333658", "Marca-Texto Stabilo Boss Vermelho", "Stabilo", "(49) 6024-7500", 25,
-                7, 120);
-        Product p9 = new Product("4006381333689", "Marca-Texto Stabilo Boss Rosa", "Stabilo", "(49) 6024-7500", 25, 7,
+                120);
+        Product p9 = new Product("4006381333689", "Marca-Texto Stabilo Boss Rosa", "Stabilo", "(49) 6024-7500", 25,
                 120);
         Product p10 = new Product("4006381333641", "Marca-Texto Stabilo Boss Verde Claro", "Stabilo", "(49) 6024-7500",
-                25, 7, 120);
+                25, 120);
         Product p11 = new Product("70330179134", "Caneta Esferográfica Bic Cristal Bold 1.6 Azul", "Bic",
-                "(16) 2101-2200", 100, 20, 500);
+                "(16) 2101-2200", 100, 500);
         Product p12 = new Product("70330129665", "Caneta Esferográfica Bic Cristal 1.0 Preta", "Bic", "(16) 2101-2200",
-                100, 20, 500);
+                100, 500);
 
         Storage storage = new Storage();
         storage.restock(p1, getRandomStock());
@@ -100,10 +101,200 @@ public class Main {
         storage.receiveSellingOrder(so9);
         storage.receiveSellingOrder(so10);
 
+        Scanner sc = new Scanner(System.in);
+        boolean running = true;
+
+        while (running) {
+
+            printMenu();
+            System.out.print("Escolha uma opção: ");
+            int op = sc.nextInt();
+            sc.nextLine(); // consumir quebra de linha
+
+            switch (op) {
+
+                // === PRODUTOS ===
+                case 1 -> inputNewProduct(sc, storage);
+                case 2 -> productsList(storage);
+                case 3 -> buscarProduto(sc, storage);
+                case 4 -> atualizarProduto(sc, storage);
+
+                // === ESTOQUE ===
+                case 5 -> reporEstoque(sc, storage);
+                case 6 -> baixarEstoque(sc, storage);
+                case 7 -> listarEstoque(storage);
+                case 8 -> consultarEstoque(sc, storage);
+
+                // === PEDIDO DE COMPRA ===
+                case 9 -> criarPedidoCompra(sc, storage);
+                case 10 -> adicionarItensCompra(sc, storage);
+                case 11 -> processarPedidoCompra(sc, storage);
+                case 12 -> listarPedidosCompra(storage);
+
+                // === PEDIDO DE VENDA ===
+                case 13 -> criarPedidoVendaCompleto(sc, storage);
+                case 14 -> processarPedidoVenda(sc, storage);
+                case 15 -> listarPedidosVenda(storage);
+
+                // === UTILIDADES ===
+                case 16 -> mostrarLog(storage);
+                case 17 -> gerarRelatorioEstoque(storage);
+
+                // === SAIR ===
+                case 18 -> running = false;
+
+                default -> System.out.println("Opção inválida.");
+            }
+        }
+
+        sc.close();
+    }
+
+    private static void printMenu() {
+        System.out.println("\n====== MENU WMS ======");
+
+        System.out.println("\n--- Produtos ---");
+        System.out.println("1. Cadastrar produto");
+        System.out.println("2. Listar produtos");
+        System.out.println("3. Buscar produto");
+        System.out.println("4. Atualizar produto");
+
+        System.out.println("\n--- Estoque ---");
+        System.out.println("5. Repor estoque");
+        System.out.println("6. Baixar estoque");
+        System.out.println("7. Listar estoque");
+        System.out.println("8. Consultar estoque de um produto");
+
+        System.out.println("\n--- Pedidos de Compra ---");
+        System.out.println("9. Criar pedido de compra");
+        System.out.println("10. Adicionar itens ao pedido de compra");
+        System.out.println("11. Processar pedido de compra");
+        System.out.println("12. Listar pedidos de compra");
+
+        System.out.println("\n--- Pedidos de Venda ---");
+        System.out.println("13. Criar pedido de venda (com itens)");
+        System.out.println("14. Processar pedido de venda");
+        System.out.println("15. Listar pedidos de venda");
+
+        System.out.println("\n--- Utilidades ---");
+        System.out.println("16. Mostrar log de transações");
+        System.out.println("17. Gerar relatório de estoque");
+
+        System.out.println("\n18. Sair");
     }
 
     private static int getRandomStock() {
         return (int) (Math.random() * 290) + 10;
+    }
 
+    private static void inputNewProduct(Scanner sc, Storage storage) {
+        System.out.println("=== Cadastro de Produto ===");
+
+        System.out.print("Código de Barra do Produto: ");
+        String code = sc.nextLine();
+        for (Product p : storage.getProducts()) {
+            if (p.getCode().equals(code)) {
+                System.out.println("ERRO: Já existe um produto com esse código de barras.");
+                return; // aborta o cadastro
+            }
+        }
+        System.out.print("Nome do produto: ");
+        String name = sc.nextLine();
+
+        System.out.print("Fornecedor: ");
+        String supplier = sc.nextLine();
+
+        System.out.print("Telefone do fornecedor: ");
+        String supplierPhone = sc.nextLine();
+
+        System.out.print("Quantidade mínima: ");
+        int min = Integer.parseInt(sc.nextLine());
+        if (min < 0) {
+            System.out.println("ERRO: Este campo apenas aceita numeros não negativos");
+            return; // aborta o cadastro
+        }
+
+        System.out.print("Quantidade máxima: ");
+        int max = Integer.parseInt(sc.nextLine());
+        if (max < 1) {
+            System.out.println("ERRO: Este campo apenas aceita numeros positivos");
+            return; // aborta o cadastro
+        }
+        System.out.print("Quantidade inicial: ");
+        int initial = Integer.parseInt(sc.nextLine());
+        if (initial < 0) {
+            System.out.println("ERRO: Este campo apenas aceita numeros não negativos");
+            return; // aborta o cadastro
+        }
+
+        // cria produto
+        Product p = new Product(code, name, supplier, supplierPhone, min, max);
+
+        // coloca quantidade inicial no estoque
+        storage.restock(p, initial);
+    }
+
+    private static void productsList(Storage storage) {
+        for (Product item : storage.getProducts()) {
+            System.out.println(item.getCode() + " | " + item.getName() + "\n");
+        }
+    }
+
+    private static void buscarProduto(Scanner sc, Storage storage) {
+        System.out.println("=== Buscar Produto ===\n");
+        System.out.print("Código de Barra do Produto: ");
+        String code = sc.nextLine();
+
+        for (Product item : storage.getProducts()) {
+            if (item.getCode().equals(code)) {
+                System.out.println(item.getCode() + " | " + item.getName() + " | " + "Criação:" + item.getCreation()
+                        + " | " + "Ultima Atualização:" + item.getLastUpdate() + "\n");
+                return;
+            }
+        }
+        System.out.print("ERRO: Produto não encontrado!");
+        return;
+    }
+
+    private static void atualizarProduto(Scanner sc, Storage storage) {
+    }
+
+    private static void reporEstoque(Scanner sc, Storage storage) {
+    }
+
+    private static void baixarEstoque(Scanner sc, Storage storage) {
+    }
+
+    private static void listarEstoque(Storage storage) {
+    }
+
+    private static void consultarEstoque(Scanner sc, Storage storage) {
+    }
+
+    private static void criarPedidoCompra(Scanner sc, Storage storage) {
+    }
+
+    private static void adicionarItensCompra(Scanner sc, Storage storage) {
+    }
+
+    private static void processarPedidoCompra(Scanner sc, Storage storage) {
+    }
+
+    private static void listarPedidosCompra(Storage storage) {
+    }
+
+    private static void criarPedidoVendaCompleto(Scanner sc, Storage storage) {
+    }
+
+    private static void processarPedidoVenda(Scanner sc, Storage storage) {
+    }
+
+    private static void listarPedidosVenda(Storage storage) {
+    }
+
+    private static void mostrarLog(Storage storage) {
+    }
+
+    private static void gerarRelatorioEstoque(Storage storage) {
     }
 }

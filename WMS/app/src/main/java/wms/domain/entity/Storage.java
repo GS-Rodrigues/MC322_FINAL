@@ -32,7 +32,7 @@ import wms.interfaces.InvMoviment;
  * </p>
  *
  * @author Guilherme
- * @version 1.2
+ * @version 1.3
  * @since 2025-11-21
  */
 public class Storage implements InvMoviment {
@@ -52,10 +52,27 @@ public class Storage implements InvMoviment {
      */
     @Override
     public void restock(Product p, int quantity) {
-        StorageAddress address = new StorageAddress("RESTOCK", quantity);
-        p.add(quantity, address);
-        Transaction t = new Transaction("RESTOCK", p, quantity);
-        registerTransaction(t);
+        boolean flag = false;
+        for (Product item : this.products) {
+            if (item.getCode().equals(p.getCode())) {
+                StorageAddress address = new StorageAddress("RESTOCK", quantity);
+                p.add(quantity, address);
+                Transaction t = new Transaction("RESTOCK", p, quantity);
+                registerTransaction(t);
+                flag = true;
+                break;
+            }
+            ;
+        }
+        if (!flag) {
+            this.products.add(p);
+            StorageAddress address = new StorageAddress("RESTOCK", quantity);
+            p.add(quantity, address);
+            Transaction t = new Transaction("RESTOCK", p, quantity);
+            registerTransaction(t);
+
+        }
+
     }
 
     /**
@@ -94,10 +111,10 @@ public class Storage implements InvMoviment {
 
     }
 
-    public void receiveSellingOrder(SellingOrder neworder){
+    public void receiveSellingOrder(SellingOrder neworder) {
         this.ordermanager.addSo(neworder);
     }
-    
+
     /**
      * Realiza operação de compra (entrada de estoque).
      *
