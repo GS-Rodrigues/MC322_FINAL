@@ -122,28 +122,26 @@ public class Main {
                 case 4 -> updateProduct(sc, storage);
 
                 // === ESTOQUE ===
-                case 5 -> reporEstoque(sc, storage);
-                case 6 -> baixarEstoque(sc, storage);
+                case 5 -> input(sc, storage);
+                case 6 -> output(sc, storage);
                 case 7 -> listarEstoque(storage);
                 case 8 -> consultarEstoque(sc, storage);
 
                 // === PEDIDO DE COMPRA ===
-                case 9 -> criarPedidoCompra(sc, storage);
-                case 10 -> adicionarItensCompra(sc, storage);
-                case 11 -> processarPedidoCompra(sc, storage);
-                case 12 -> listarPedidosCompra(storage);
+                case 9 -> processarPedidoCompra(sc, storage);
+                case 10 -> listarPedidosCompra(storage);
 
                 // === PEDIDO DE VENDA ===
-                case 13 -> criarPedidoVendaCompleto(sc, storage);
-                case 14 -> processarPedidoVenda(sc, storage);
-                case 15 -> listarPedidosVenda(storage);
+                case 11 -> criarPedidoVendaCompleto(sc, storage);
+                case 12 -> processarPedidoVenda(sc, storage);
+                case 13 -> listarPedidosVenda(storage);
 
                 // === UTILIDADES ===
-                case 16 -> mostrarLog(storage);
-                case 17 -> gerarRelatorioEstoque(storage);
+                case 14 -> mostrarLog(storage);
+                case 15 -> gerarRelatorioEstoque(storage);
 
                 // === SAIR ===
-                case 18 -> running = false;
+                case 16 -> running = false;
 
                 default -> System.out.println("Opção inválida.");
             }
@@ -174,21 +172,19 @@ public class Main {
         System.out.println("8. Consultar estoque de um produto");
 
         System.out.println("\n--- Pedidos de Compra ---");
-        System.out.println("9. Criar pedido de compra");
-        System.out.println("10. Adicionar itens ao pedido de compra");
-        System.out.println("11. Processar pedido de compra");
-        System.out.println("12. Listar pedidos de compra");
+        System.out.println("9. Processar pedido de compra");
+        System.out.println("10. Listar pedidos de compra");
 
         System.out.println("\n--- Pedidos de Venda ---");
-        System.out.println("13. Criar pedido de venda (com itens)");
-        System.out.println("14. Processar pedido de venda");
-        System.out.println("15. Listar pedidos de venda");
+        System.out.println("11. Criar pedido de venda (com itens)");
+        System.out.println("12. Processar pedido de venda");
+        System.out.println("13. Listar pedidos de venda");
 
         System.out.println("\n--- Utilidades ---");
-        System.out.println("16. Mostrar log de transações");
-        System.out.println("17. Gerar relatório de estoque");
+        System.out.println("14. Mostrar log de transações");
+        System.out.println("15. Gerar relatório de estoque");
 
-        System.out.println("\n18. Sair");
+        System.out.println("\n16. Sair");
     }
 
     private static int getRandomStock() {
@@ -295,30 +291,72 @@ public class Main {
 
         switch (op) {
             case 1 -> found.setName(sc.nextLine());
-            case 2 -> found.setMinQuantity(sc.nextInt());
-            case 3 -> found.setMaxQuantity(sc.nextInt());
+            case 2 -> found.setMinQuantity(Integer.parseInt(sc.nextLine()));
+            case 3 -> found.setMaxQuantity(Integer.parseInt(sc.nextLine()));
             case 4 -> found.setSupplier(sc.nextLine());
             case 5 -> found.setSupplierPhone(sc.nextLine());
             default -> System.out.println("Opção inválida.");
         }
     }
 
-    private static void reporEstoque(Scanner sc, Storage storage) {
+    private static void input(Scanner sc, Storage storage) {
+        Product p = null;
+        System.out.println("=== Entrada de Produto ===");
+        System.out.print("Código de Barra do Produto: ");
+        String code = sc.nextLine();
+        for (Product item : storage.getProducts()) {
+            if (item.getCode().equals(code)) {
+                p = item;
+                break;
+            }
+        }
+        if (p == null) {
+            System.out.println("ERRO: Produto não encontrado no estoque. Operação Cancelada");
+            return;
+        } else {
+            System.out.print("Digite a quantidade de entrada: ");
+            int qtd = Integer.parseInt(sc.nextLine());
+            if (qtd <= 0) {
+                System.out.println("ERRO: Este campo apenas aceita numeros positivos. Operação Cancelada.");
+                return;
+            }
+            storage.restock(p, qtd);
+        }
     }
 
-    private static void baixarEstoque(Scanner sc, Storage storage) {
+    private static void output(Scanner sc, Storage storage) {
+        Product p = null;
+        System.out.println("=== Saida de Produto ===");
+        System.out.print("Código de Barra do Produto: ");
+        String code = sc.nextLine();
+        for (Product item : storage.getProducts()) {
+            if (item.getCode().equals(code)) {
+                p = item;
+                break;
+            }
+        }
+        if (p == null) {
+            System.out.println("ERRO: Produto não encontrado no estoque. Operação Cancelada");
+            return;
+        } else {
+            System.out.print("Digite a quantidade de saida: ");
+            int qtd = Integer.parseInt(sc.nextLine());
+            if (qtd <= 0) {
+                System.out.println("ERRO: Este campo apenas aceita numeros positivos. Operação Cancelada.");
+                return;
+            }
+            if (p.getCurrentQuantity() < qtd) {
+                System.out.println("ERRO: Não temos essa quantidade em estoque para saida. Operação Cancelada.");
+                return;
+            }
+            storage.withdraw(p, qtd);
+        }
     }
 
     private static void listarEstoque(Storage storage) {
     }
 
     private static void consultarEstoque(Scanner sc, Storage storage) {
-    }
-
-    private static void criarPedidoCompra(Scanner sc, Storage storage) {
-    }
-
-    private static void adicionarItensCompra(Scanner sc, Storage storage) {
     }
 
     private static void processarPedidoCompra(Scanner sc, Storage storage) {
