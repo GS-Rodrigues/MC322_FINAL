@@ -727,8 +727,12 @@ public class Main {
     }
 
     private static void mostrarLog(Storage storage) {
+        // acho que é bom esperar fazermos a parte do XML / persistencia para pensar
+        // nessa parte.
     }
 
     private static void gerarRelatorioEstoque(Storage storage) {
+        // acho que é bom esperar fazermos a parte do XML / persistencia para pensar
+        // nessa parte.
     }
 }
