@@ -1,5 +1,6 @@
 package wms;
 
+import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
 
 import wms.domain.entity.*;
@@ -9,11 +10,12 @@ public class Main {
     public static void main(String[] args) {
         // Produtos Exemplos
         Product p1 = new Product("7897832823227", "Régua 30cm Dello", "Dello", "(35) 3435-8900", 50, 100);
-        Product p2 = new Product("7897832823236", "Régua 50cm Dello", "Dello", "(35) 3435-8900", 50,  100);
+        Product p2 = new Product("7897832823236", "Régua 50cm Dello", "Dello", "(35) 3435-8900", 50, 100);
         Product p3 = new Product("7897832823245", "Régua 70cm Dello", "Dello", "(35) 3435-8900", 50, 100);
         Product p4 = new Product("7891360320227", "Lápis 48 Cores Faber Castell Ecolápis", "Faber Castell",
                 "(11) 4004-6200", 30, 200);
-        Product p5 = new Product("7891360674818", "Lápis 10 Cores Faber Castell", "Faber Castell", "(11) 4004-6200", 40, 150);
+        Product p5 = new Product("7891360674818", "Lápis 10 Cores Faber Castell", "Faber Castell", "(11) 4004-6200", 40,
+                150);
         Product p6 = new Product("7891360458142", "Lápis 24 Cores Faber Castell Linha Vermelha", "Faber Castell",
                 "(11) 4004-6200", 20, 100);
         Product p7 = new Product("7891360698449", "Lápis Eco Supersoft 50 Cores Faber Castell", "Faber Castell",
@@ -145,10 +147,15 @@ public class Main {
 
                 default -> System.out.println("Opção inválida.");
             }
+            pause(sc);
         }
 
         sc.close();
     }
+    private static void pause(Scanner sc) {
+    System.out.println("\nPressione ENTER para continuar...");
+    sc.nextLine();
+}
 
     private static void printMenu() {
         System.out.println("\n====== MENU WMS ======");
@@ -241,14 +248,18 @@ public class Main {
     }
 
     private static void buscarProduto(Scanner sc, Storage storage) {
+        DateTimeFormatter fmt = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
+
         System.out.println("=== Buscar Produto ===\n");
         System.out.print("Código de Barra do Produto: ");
         String code = sc.nextLine();
 
         for (Product item : storage.getProducts()) {
             if (item.getCode().equals(code)) {
-                System.out.println(item.getCode() + " | " + item.getName() + " | " + "Criação:" + item.getCreation()
-                        + " | " + "Ultima Atualização:" + item.getLastUpdate() + "\n");
+                System.out.println(
+                        item.getCode() + " | " + item.getName() + " | Criação: " + item.getCreation().format(fmt)
+                                + " | Última Atualização: " + item.getLastUpdate().format(fmt) + "\n");
+
                 return;
             }
         }
