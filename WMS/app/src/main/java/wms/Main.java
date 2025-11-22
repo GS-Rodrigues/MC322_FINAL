@@ -144,7 +144,7 @@ public class Main {
                 // PEDIDO DE VENDA
                 case 11 -> newSellingOrder(sc, storage);
                 case 12 -> processSellingOrder(sc, storage);
-                case 13 -> listarPedidosVenda(storage);
+                case 13 -> lisOfSO(storage);
 
                 // UTILIDADES
                 case 14 -> mostrarLog(storage);
@@ -558,8 +558,7 @@ public class Main {
         }
 
         System.out.println("\n=== LISTA DE PEDIDOS DE COMPRA ===");
-        System.out.printf("%-10s %-20s %-15s %-10s\n",
-                "CÓDIGO", "FORNECEDOR", "TELEFONE", "STATUS");
+        System.out.printf("%-10s %-20s %-15s %-10s\n", "CÓDIGO", "FORNECEDOR", "TELEFONE", "STATUS");
         System.out.println("--------------------------------------------------------------");
 
         for (PurchaseOrder po : pedidos) {
@@ -573,8 +572,7 @@ public class Main {
             if (!po.getItens().isEmpty()) {
                 System.out.println("  Itens:");
                 for (OrderItem item : po.getItens()) {
-                    System.out.println("    - " + item.getProduct().getName() +
-                            " | Qtd: " + item.getQuantity());
+                    System.out.println("    - " + item.getProduct().getName() + " | Qtd: " + item.getQuantity());
                 }
             }
 
@@ -649,8 +647,37 @@ public class Main {
         return;
     }
 
-    private static void listarPedidosVenda(Storage storage) {
+    private static void lisOfSO(Storage storage) {
+        List<SellingOrder> pedidos = storage.getOrderManager().getSo();
+
+        if (pedidos.isEmpty()) {
+            System.out.println("\nNenhum pedido de compra cadastrado.");
+            return;
+        }
+
+        System.out.println("\n=== LISTA DE ORDEM DE VENDA ===");
+        System.out.printf("%-10s %-20s %-15s %-10s\n", "CÓDIGO", "CLIENTE", "CEP", "STATUS");
+        System.out.println("--------------------------------------------------------------");
+
+        for (SellingOrder so : pedidos) {
+            System.out.printf("%-10s %-20s %-15s %-10s\n",
+                    so.getCode(),
+                    Truncar.truncar(so.getCustomerName(), 20),
+                    so.getCep(),
+                    so.getStatus());
+
+            // Exibe itens do pedido (se houver)
+            if (!so.getItens().isEmpty()) {
+                System.out.println("  Itens:");
+                for (OrderItem item : so.getItens()) {
+                    System.out.println("    - " + item.getProduct().getName() + " | Qtd: " + item.getQuantity());
+                }
+            }
+
+            System.out.println("--------------------------------------------------------------");
+        }
     }
+
 
     private static void mostrarLog(Storage storage) {
     }
