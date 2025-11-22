@@ -1,10 +1,12 @@
 package wms;
 
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 import java.util.Scanner;
 
 import wms.domain.entity.*;
 import wms.domain.order.*;
+import wms.support.Truncar;
 
 public class Main {
     public static void main(String[] args) {
@@ -124,7 +126,7 @@ public class Main {
                 // === ESTOQUE ===
                 case 5 -> input(sc, storage);
                 case 6 -> output(sc, storage);
-                case 7 -> listarEstoque(storage);
+                case 7 -> StorageList(storage);
                 case 8 -> consultarEstoque(sc, storage);
 
                 // === PEDIDO DE COMPRA ===
@@ -353,7 +355,37 @@ public class Main {
         }
     }
 
-    private static void listarEstoque(Storage storage) {
+    private static void StorageList(Storage storage) {
+        List<Product> produtos = storage.getProducts();
+
+        if (produtos.isEmpty()) {
+            System.out.println("Nenhum produto cadastrado.");
+            return;
+        }
+
+        System.out.println("\n=== LISTA DE PRODUTOS ===");
+
+        // Cabeçalho da tabela
+        System.out.printf("%-15s %-30s %-10s %-10s %-10s %-10s\n",
+                "CÓDIGO", "NOME", "ATUAL", "MIN", "MAX", "FORNECEDOR");
+
+        System.out.println(
+                "--------------------------------------------------------------------------------------------");
+
+        // Linhas
+        for (Product p : produtos) {
+
+            String nome = Truncar.truncar(p.getName(), 35);
+            String fornecedor = Truncar.truncar(p.getSupplier(), 20);
+
+            System.out.printf("%-13s %-35s %-6d %-6d %-6d %-20s%n",
+                    p.getCode(),
+                    nome,
+                    p.getCurrentQuantity(),
+                    p.getMinQuantity(),
+                    p.getMaxQuantity(),
+                    fornecedor);
+        }
     }
 
     private static void consultarEstoque(Scanner sc, Storage storage) {
