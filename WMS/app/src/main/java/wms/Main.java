@@ -534,6 +534,16 @@ public class Main {
         return;
     }
 
+    /**
+     * Processa um pedido de compra, dando entrada dele no estoque
+     * 
+     * @param storage Instância do Storage que contém a lista de PO's.
+     * @param sc      Scanner para entrada do usuário.
+     * 
+     * @author Guilherme Rodrigues
+     * @version 1.0
+     * @since 2025-11-22
+     */
     private static void processPurchaseOrder(Scanner sc, Storage storage) {
         System.out.println("=== Processar PO===\n");
         System.out.print("Código do PO:");
@@ -549,6 +559,15 @@ public class Main {
         return;
     }
 
+    /**
+     * Exibe a lista de todos os Pedidos de Compra em Aberto no Storage
+     * 
+     * @param storage Instância do Storage que contém a lista de PO's.
+     * 
+     * @author Guilherme Rodrigues
+     * @version 1.0
+     * @since 2025-11-22
+     */
     private static void lisOfPO(Storage storage) {
         List<PurchaseOrder> pedidos = storage.getOrderManager().getPo();
 
@@ -580,6 +599,16 @@ public class Main {
         }
     }
 
+    /**
+     * Cria um novo pedido de venda.
+     * 
+     * @param storage Instância do Storage que contém a lista de PO's.
+     * @param sc      Scanner para entrada do usuário.
+     * 
+     * @author Guilherme Rodrigues
+     * @version 1.0
+     * @since 2025-11-22
+     */
     private static void newSellingOrder(Scanner sc, Storage storage) {
         System.out.println("=== Criar Pedido de Venda ===");
 
@@ -632,6 +661,16 @@ public class Main {
         }
     }
 
+    /**
+     * Processa um Pedido de Venda, dando saida dele no estoque
+     * 
+     * @param storage Instância do Storage que contém a lista de PO's.
+     * @param sc      Scanner para entrada do usuário.
+     * 
+     * @author Guilherme Rodrigues
+     * @version 1.0
+     * @since 2025-11-22
+     */
     private static void processSellingOrder(Scanner sc, Storage storage) {
         System.out.println("=== Processar Ordem de Venda===\n");
         System.out.print("Código da Ordem de Venda:");
@@ -647,6 +686,15 @@ public class Main {
         return;
     }
 
+    /**
+     * Exibe a lista de todos os Pedidos de Venda em Aberto no Storage
+     * 
+     * @param storage Instância do Storage que contém a lista de SO's.
+     * 
+     * @author Guilherme Rodrigues
+     * @version 1.0
+     * @since 2025-11-22
+     */
     private static void lisOfSO(Storage storage) {
         List<SellingOrder> pedidos = storage.getOrderManager().getSo();
 
@@ -677,7 +725,6 @@ public class Main {
             System.out.println("--------------------------------------------------------------");
         }
     }
-
 
     private static void mostrarLog(Storage storage) {
     }
